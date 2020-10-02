@@ -26,9 +26,7 @@ class MyPiece < Piece
   def self.next_piece (board)
     MyPiece.new(All_My_Pieces.sample, board)
   end
-  def self.cheat_piece (board)
-    MyPiece.new([[[0,0]]], board)
-  end
+
 end
 
 class MyBoard < Board
@@ -41,12 +39,10 @@ class MyBoard < Board
   end
   # gets the next piece
   def next_piece
-    if @cheating
-       @current_block = MyPiece.cheat_piece(self)
-       @cheating = false
-    else
-       @current_block = MyPiece.next_piece(self)
-    end
+    
+    
+    @current_block = MyPiece.next_piece(self)
+    
     @current_pos = nil
   end
 
@@ -76,61 +72,61 @@ class MyBoard < Board
     draw
   end
 
-  # def cheat_helper
+  def cheat_helper
    
-  #   block = [[[0,0]]]
+    block = [[[0,0]]]
    
-  #   # if score >= 100   # score > 100 and current piece is down
-  #   @current_block = MyPiece.new(block,self)
-  #   # @score -= 100
-  #   @current_pos = nil
-  #   # end
-  # end
+    # if score >= 100   # score > 100 and current piece is down
+    @current_block = MyPiece.new(block,self)
+    # @score -= 100
+    @current_pos = nil
+    # end
+  end
 
-  # def run
+  def run
     
-  #   ran = @current_block.drop_by_one
-  #   if !ran
-  #     store_current
-  #     if !game_over?
-  #       if @cheating 
+    ran = @current_block.drop_by_one
+    if !ran
+      store_current
+      if !game_over?
+        if @cheating 
          
-  #         cheat_helper
-  #         @cheating = false
-  #       else  
+          cheat_helper
+          @cheating = false
+        else  
           
-  #       next_piece
-  #       end
-  #     end
-  #   end
-  #   @game.update_score
-  #   draw
-  # end
+        next_piece
+        end
+      end
+    end
+    @game.update_score
+    draw
+  end
 
-  # def drop_all_the_way
-  #   if @game.is_running?
-  #     ran = @current_block.drop_by_one
-  #     @current_pos.each{|block| block.remove}
-  #     while ran
-  #       @score += 1
-  #       ran = @current_block.drop_by_one
-  #     end
-  #     draw
-  #     store_current
-  #     if !game_over?
-  #       if @cheating 
+  def drop_all_the_way
+    if @game.is_running?
+      ran = @current_block.drop_by_one
+      @current_pos.each{|block| block.remove}
+      while ran
+        @score += 1
+        ran = @current_block.drop_by_one
+      end
+      draw
+      store_current
+      if !game_over?
+        if @cheating 
           
-  #         cheat_helper
-  #         @cheating = false
-  #       else  
+          cheat_helper
+          @cheating = false
+        else  
           
-  #       next_piece
-  #       end
-  #     end
-  #     @game.update_score
-  #     draw
-  #   end
-  # end
+        next_piece
+        end
+      end
+      @game.update_score
+      draw
+    end
+  end
 
 
 
